@@ -1,0 +1,25 @@
+name: ${project.artifactId}
+version: ${project.version}
+authors: [oshcon]
+softdepend: [Essentials, SuperVanish, PremiumVanish]
+website: http://doodcraft.net/
+main: net.doodcraft.oshcon.bukkit.invasion.InvasionPlugin
+
+commands:
+  manage:
+    description: Base command
+
+permissions:
+  alieninvasion.*:
+    description: Grants all plugin permission nodes
+    default: OP
+  alieninvasion.command.manage:
+    description: Allows players to use /manage
+    default: OP
+  alieninvasion.command.setclass:
+    description: Allows players to use /manage setclass
+    default: OP
+  alieninvasion.command.reload:
+    description: Allows players to use /manage reload
+    default: OP
+
