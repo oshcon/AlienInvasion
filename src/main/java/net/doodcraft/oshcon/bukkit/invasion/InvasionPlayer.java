@@ -15,6 +15,8 @@ public class InvasionPlayer {
 
     private UUID uuid;
     private InvasionClass invasionClass;
+    private Boolean bleeding;
+    private Boolean burned;
 
     public InvasionPlayer(Player player, InvasionClass invasionClass) {
         this.uuid = player.getUniqueId();
