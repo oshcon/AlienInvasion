@@ -1,6 +1,9 @@
-package net.doodcraft.oshcon.bukkit.invasion;
+package net.doodcraft.oshcon.bukkit.invasion.player;
 
+import net.doodcraft.oshcon.bukkit.invasion.InvasionPlugin;
+import net.doodcraft.oshcon.bukkit.invasion.config.Configuration;
 import net.doodcraft.oshcon.bukkit.invasion.events.InvasionPlayerCreationEvent;
+import net.doodcraft.oshcon.bukkit.invasion.util.StaticMethods;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -15,8 +18,6 @@ public class InvasionPlayer {
 
     private UUID uuid;
     private InvasionClass invasionClass;
-    private Boolean bleeding;
-    private Boolean burned;
 
     public InvasionPlayer(Player player, InvasionClass invasionClass) {
         this.uuid = player.getUniqueId();

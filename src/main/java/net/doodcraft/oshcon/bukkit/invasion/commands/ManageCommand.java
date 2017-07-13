@@ -1,5 +1,8 @@
-package net.doodcraft.oshcon.bukkit.invasion;
+package net.doodcraft.oshcon.bukkit.invasion.commands;
 
+import net.doodcraft.oshcon.bukkit.invasion.player.InvasionClass;
+import net.doodcraft.oshcon.bukkit.invasion.player.InvasionPlayer;
+import net.doodcraft.oshcon.bukkit.invasion.util.StaticMethods;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

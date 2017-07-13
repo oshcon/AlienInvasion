@@ -1,84 +1,46 @@
-package net.doodcraft.oshcon.bukkit.invasion;
+package net.doodcraft.oshcon.bukkit.invasion.listeners;
 
-import de.slikey.effectlib.util.ParticleEffect;
 import net.doodcraft.oshcon.bukkit.enderpads.api.EnderPadCreateEvent;
 import net.doodcraft.oshcon.bukkit.invasion.events.InvasionPlayerCreationEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.*;
+import net.doodcraft.oshcon.bukkit.invasion.player.InvasionClass;
+import net.doodcraft.oshcon.bukkit.invasion.player.InvasionPlayer;
+import net.doodcraft.oshcon.bukkit.invasion.player.PassivesManager;
+import net.doodcraft.oshcon.bukkit.invasion.util.StaticMethods;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class InvasionListener implements Listener {
-
-    public static Map<Entity, Integer> exploderParticleTasks = new HashMap<>();
+public class PlayerListener implements Listener {
 
     @EventHandler
-    public void onSpawn(EntitySpawnEvent event) {
+    public void onChat(AsyncPlayerChatEvent event) {
+        Player p = event.getPlayer();
+        String msg = event.getMessage();
 
-        Entity entity = event.getEntity();
+        if (p.hasPermission("invasion.colorchat")) {
+            msg = StaticMethods.addColor(event.getMessage());
+        }
 
-        if (entity instanceof Monster) {
+        event.setMessage(msg);
+        event.setFormat("%s§8: §7" + "%s");
+    }
 
-            if (entity.getType() == EntityType.ZOMBIE) {
-                Zombie zombie = (Zombie) entity;
-                zombie.setCustomName("MELEE ALIEN");
-                zombie.setCustomNameVisible(true);
-                new InvasionAlien(entity, InvasionAlienType.NORMAL_MELEE);
-                return;
-            }
+    @EventHandler
+    public void onBreak(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
 
-            if (entity.getType() == EntityType.SKELETON) {
-                Skeleton skeleton = (Skeleton) entity;
-                skeleton.setCustomName("RANGED ALIEN");
-                skeleton.setCustomNameVisible(true);
-                new InvasionAlien(entity, InvasionAlienType.NORMAL_RANGED);
-                return;
-            }
-
-            if (entity.getType() == EntityType.CREEPER) {
-                Creeper creeper = (Creeper) entity;
-                creeper.setCustomName("EXPLODER ALIEN");
-                creeper.setCustomNameVisible(true);
-
-                // spawn particles for the exploder
-                int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(InvasionPlugin.plugin, new Runnable() {
-
-                    @Override
-                    public void run() {
-                        if (!entity.isDead()) {
-                            ParticleEffect.FLAME.display(0, 0, 0, 0, 5, ((Creeper) entity).getEyeLocation(), 64.0);
-                        }
-                    }
-                },1L, 10L);
-
-                exploderParticleTasks.put(entity, task);
-                new InvasionAlien(entity, InvasionAlienType.NORMAL_RANGED);
-                return;
-            }
-
+        if (!player.hasPermission("invasion.build")) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onLoad(ChunkLoadEvent event) {
-        for (Entity entity : event.getChunk().getEntities()) {
-            if (entity instanceof Monster) {
-                if (!InvasionAlien.getAliens().containsKey(entity)) {
-                    entity.remove();
-                }
-            }
-        }
+    public void onDeath(PlayerDeathEvent event) {
+        // create our own death messages
     }
 
     @EventHandler
@@ -123,7 +85,7 @@ public class InvasionListener implements Listener {
     }
 
     @EventHandler
-    public void onEntityDamage(EntityDamageByEntityEvent event) {
+    public void onDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
 

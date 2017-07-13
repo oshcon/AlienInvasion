@@ -1,4 +1,4 @@
-package net.doodcraft.oshcon.bukkit.invasion;
+package net.doodcraft.oshcon.bukkit.invasion.config;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;

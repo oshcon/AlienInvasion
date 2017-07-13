@@ -1,16 +1,16 @@
-package net.doodcraft.oshcon.bukkit.invasion;
+package net.doodcraft.oshcon.bukkit.invasion.util;
 
+import net.doodcraft.oshcon.bukkit.invasion.InvasionPlugin;
+import net.doodcraft.oshcon.bukkit.invasion.config.Configuration;
 import net.doodcraft.oshcon.bukkit.invasion.events.InvasionPlayerCreationEvent;
+import net.doodcraft.oshcon.bukkit.invasion.player.InvasionClass;
+import net.doodcraft.oshcon.bukkit.invasion.player.InvasionPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class StaticMethods {
+public class PlayerMethods {
 
     public static void loadInvasionPlayer(InvasionPlayer pl) {
         Player player = Bukkit.getPlayer(pl.getUniqueId());
@@ -18,7 +18,7 @@ public class StaticMethods {
         if (iPlayer == null) {
             return;
         }
-        player.setDisplayName(InvasionClass.getPrefix(iPlayer.getInvasionClass()) + player.getName() + "§r");
+        player.setDisplayName("§8[" + InvasionClass.getPrefix(iPlayer.getInvasionClass()) + InvasionClass.getName(iPlayer.getInvasionClass()) + "§8] §r" + player.getName() + "§r");
     }
 
     public static void createInvasionPlayer(Player player) {
@@ -55,29 +55,5 @@ public class StaticMethods {
         }
 
         return false;
-    }
-
-    public static void log(String message) {
-        try {
-            message = "[AlienInvasion] &r" + message;
-            sendConsole(message);
-        } catch (Exception ex) {
-            Logger logger = Bukkit.getLogger();
-            logger.log(Level.INFO, removeColor("[AlienInvasion] " + message));
-        }
-    }
-
-    private static void sendConsole(String message) {
-        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-        console.sendMessage(addColor(message));
-    }
-
-    public static String addColor(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
-    }
-
-    private static String removeColor(String message) {
-        message = addColor(message);
-        return ChatColor.stripColor(message);
     }
 }

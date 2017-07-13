@@ -1,5 +1,6 @@
-package net.doodcraft.oshcon.bukkit.invasion;
+package net.doodcraft.oshcon.bukkit.invasion.player;
 
+import net.doodcraft.oshcon.bukkit.invasion.InvasionPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

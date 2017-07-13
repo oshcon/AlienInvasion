@@ -1,4 +1,4 @@
-package net.doodcraft.oshcon.bukkit.invasion;
+package net.doodcraft.oshcon.bukkit.invasion.player;
 
 public enum InvasionClass {
 
